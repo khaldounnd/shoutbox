@@ -1,0 +1,21 @@
+{
+    "name": "khaldon/ovos",
+    "description": "Task For ovos",
+    "type": "project",
+    "require": {
+        "cboden/ratchet": "^0.4.3",
+        "ext-json": "*",
+        "ext-pdo": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "khaldounnd",
+            "email": "khaldoun.noureddine@hotmail.com"
+        }
+    ]
+}
