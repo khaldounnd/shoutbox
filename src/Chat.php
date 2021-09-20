@@ -45,16 +45,16 @@ class Chat implements MessageComponentInterface {
     /**
      * Triggered when a client sends data through the socket
      * @param ConnectionInterface $from The socket/connection that sent the message to your application
-     * @param  string                       $msg  The message received
+     * @param  string             $msg  The message received
      * @throws Exception
      */
     public function onMessage(ConnectionInterface $from, $msg)
     {
-        $this->messageModel->store($msg);
-
+        $data = json_decode($msg);
+        $this->messageModel->store($data->message,  $from->remoteAddress, $data->agent);
         foreach ($this->clients as $client) {
-            if ($from !== $client) {
-                $client->send($msg);
+            if($from != $client) {
+                $client->send($data->message);
             }
         }
     }

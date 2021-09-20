@@ -37,13 +37,15 @@ class Message
 
     /**
      * @param $msg
+     * @param $ip
+     * @param $agent
      */
-    public function store($msg)
+    public function store($msg, $ip, $agent)
     {
 
         $stmt =  $this->db->prepare("INSERT INTO messages (message, ip, user_agent) 
                 VALUES (?, ?, ?)");
-        $stmt->execute([trim($msg), 123, 'anvd']);
+        $stmt->execute([trim($msg), $ip, $agent]);
 
         $this->destroyOldMessages();
     }
