@@ -37,6 +37,10 @@
                 <div id="sendButtonDiv">
                     <button id="send" class="btn btn-primary"><span class="fa fa-comment-alt"></span></button>
                 </div>
+                <div id="sendImageDiv">
+                    <button id="sendImage" class="btn btn-secondary"><span class="fa fa-image"></span></button>
+                </div>
+                <input hidden id="image" type="file" accept="image/*">
                 <input hidden id="user-agent" value="<?php echo $_SERVER['HTTP_USER_AGENT']; ?>">
             </div>
         </div>

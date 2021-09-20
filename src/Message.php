@@ -40,12 +40,12 @@ class Message
      * @param $ip
      * @param $agent
      */
-    public function store($msg, $ip, $agent)
+    public function store($msg, $ip, $agent, $isImage)
     {
 
-        $stmt =  $this->db->prepare("INSERT INTO messages (message, ip, user_agent) 
-                VALUES (?, ?, ?)");
-        $stmt->execute([trim($msg), $ip, $agent]);
+        $stmt =  $this->db->prepare("INSERT INTO messages (message, ip, user_agent, is_image) 
+                VALUES (?, ?, ?, ?)");
+        $stmt->execute([trim($msg), $ip, $agent, $isImage]);
 
         $this->destroyOldMessages();
     }
@@ -61,4 +61,5 @@ class Message
         $stmt = $this->db->prepare("DELETE FROM messages WHERE id NOT IN ($newMessages)");
         $stmt->execute();
     }
+
 }

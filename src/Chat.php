@@ -36,7 +36,12 @@ class Chat implements MessageComponentInterface {
         $messages = $this->messageModel->getLastTen();
 
         foreach ($messages as $message) {
-            $conn->send($message['message']. "\n");
+            $data = json_encode([
+                'message' => $message['message'],
+                'is_image' => $message['is_image']
+            ]);
+
+            $conn->send($data. "\n");
         }
 
         echo "New connection! ($conn->resourceId)\n";
@@ -51,7 +56,7 @@ class Chat implements MessageComponentInterface {
     public function onMessage(ConnectionInterface $from, $msg)
     {
         $data = json_decode($msg);
-        $this->messageModel->store($data->message,  $from->remoteAddress, $data->agent);
+        $this->messageModel->store($data->message,  $from->remoteAddress, $data->agent, $data->is_image );
         foreach ($this->clients as $client) {
             if($from != $client) {
                 $client->send($data->message);
