@@ -7,11 +7,11 @@ use App\Chat;
 require dirname(__DIR__) . '/vendor/autoload.php';
 
 $server = IoServer::factory(
-//    new HttpServer(
-//        new WsServer(
+    new HttpServer(
+        new WsServer(
             new Chat(),
-//        )
-//    ),
+        )
+    ),
     8080
 );
 
