@@ -1,14 +1,18 @@
 $(document).ready(function (){
 
+    let textarea = $("#message").emojioneArea({
+        pickerPosition: "top",
+        tonesStyle: "radio"
+    });
+
     /**
      * \
      * @type {HTMLElement}
      */
-    const textarea = document.getElementById("message");
-    textarea.addEventListener("keyup", function(event) {
+    textarea[0].emojioneArea.on('keyup', function (button, event){
         if (event.key === 'Enter') {
             event.preventDefault();
-            if(textarea.value === "\n" || textarea.value === "") {
+            if(textarea[0].emojioneArea.getText() === "\n\n\n" || textarea[0].emojioneArea.getText() === "") {
                 alert('Message can\'t be empty');
             } else {
                 document.getElementById("send").click();
@@ -23,7 +27,6 @@ $(document).ready(function (){
     let conn = new WebSocket('ws://localhost:8080');
     conn.onopen = function(e) {
         console.log("Connection established!");
-
     };
 
     /**
@@ -38,7 +41,7 @@ $(document).ready(function (){
      *
      */
     $('#send').click(function (){
-        let message = $('#message').val();
+        let message = textarea[0].emojioneArea.getText();
         sendMessage(message, 0)
     })
 
@@ -83,7 +86,6 @@ $(document).ready(function (){
      * @param message
      */
     function addMessage(message){
-        console.log(message)
         let body = $('#messages');
         if(body.children().length >= 10) {
             body.find('p:first').remove();
@@ -97,8 +99,6 @@ $(document).ready(function (){
         } else {
             let image = document.createElement('img');
             image.src = message.message;
-            image.style.width = "20%";
-            image.style.height = "100%";
             p.appendChild(image)
         }
 
@@ -115,7 +115,7 @@ $(document).ready(function (){
 
         let agent = $('#user-agent').val();
 
-        if(message !== "") {
+        if(message !== "\n\n\n") {
 
             let data = {
                 message: message,
@@ -126,6 +126,8 @@ $(document).ready(function (){
             conn.send(JSON.stringify(data));
             addMessage(JSON.stringify(data))
             $('#message').val('')
+            $('#message').html('')
+            $('.emojionearea-editor').html('')
         } else {
             alert('Message can\'t be empty');
         }

@@ -14,12 +14,6 @@
     cursor: pointer;
 }
 
-#messages {
-    max-height: 80vh;
-    height: 80vh;
-    overflow: scroll;
-}
-
 body {
     background-image: url('../../assets/img/chatboxBackground.gif');
     background-size: cover;
@@ -27,11 +21,19 @@ body {
     height: 100%;
 }
 
-@media  {
-
-}
-
 @media only screen and (max-width: 480px) {
+
+    #messages {
+        max-height: 80vh;
+        height: 75vh;
+        overflow: scroll;
+    }
+
+    img {
+        height: 100%;
+        width: 60%;
+    }
+
     #textAreaDiv {
         width: 68%;
         margin-left: 15px;
@@ -48,6 +50,17 @@ body {
     }
 }
 @media only screen and (min-width: 480px) {
+    #messages {
+        max-height: 80vh;
+        height: 75vh;
+        overflow: scroll;
+    }
+
+    img {
+        height: 100%;
+        width: 40%;
+    }
+
     #textAreaDiv {
         width: 70%;
         margin-left: 15px;
@@ -66,6 +79,17 @@ body {
 }
 
 @media only screen and (min-width: 768px) {
+    #messages {
+        max-height: 80vh;
+        height: 75vh;
+        overflow: scroll;
+    }
+
+    img {
+        height: 100%;
+        width: 20%;
+    }
+
     #textAreaDiv {
         width: 83%;
         margin-left: 15px;
@@ -82,4 +106,9 @@ body {
         width: 100%;
         height: 100%;
     }
+}
+
+.emojionearea-editor {
+    min-height: 8vh !important;
+    max-height: 8vh !important;
 }

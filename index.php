@@ -11,8 +11,10 @@
               integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
               crossorigin="anonymous">
 
+        <link rel="stylesheet" href="./assets/css/emojionearea.min.css">
         <link rel="stylesheet" href="./assets/css/chat.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     </head>
 
     <body>
@@ -50,6 +52,7 @@
                 crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+        <script src="./assets/js/emojionearea.min.js"></script>
         <script src="./assets/js/chat.js"></script>
     </body>
 </html>
