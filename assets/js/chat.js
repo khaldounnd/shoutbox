@@ -103,7 +103,7 @@ $(document).ready(function (){
         }
 
         p.addEventListener('click', function (){
-            alert(message);
+            alert(message.message);
         });
         body.append(p);
     }
