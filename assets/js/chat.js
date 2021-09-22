@@ -100,7 +100,7 @@ $(document).ready(function (){
         }
 
         p.addEventListener('click', function (){
-            alert(message.message);
+            showModal(message.message, message.is_image);
         });
         body.append(p);
     }
@@ -128,5 +128,18 @@ $(document).ready(function (){
         } else {
             alert('Message can\'t be empty');
         }
+    }
+
+    function showModal(message, is_image) {
+        let body = $('#modal-body');
+        if (is_image == 0) {
+            body.html(null);
+            body.append("<p>" + message + "</p>")
+        } else {
+            body.html(null);
+            body.append("<img src=\"" + message + "\" alt='message'>")
+        }
+
+        $('#modal').modal('toggle')
     }
 })
