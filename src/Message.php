@@ -11,6 +11,7 @@ class Message
 {
 
     protected ?PDO $db;
+    protected Image $image;
 
     /**
      * Message constructor.
@@ -18,6 +19,7 @@ class Message
     public function __construct()
     {
         $this->db = Connection::connect();
+        $this->image = new Image();
     }
 
     /**
@@ -58,8 +60,15 @@ class Message
         $query = $this->db->query( "SELECT id FROM messages ORDER BY id DESC LIMIT 10" );
         $newMessages = implode(', ', array_merge(...$query->fetchAll(PDO::FETCH_NUM)));
 
+        $oldMessagesQuery = $this->db->query("SELECT message FROM messages WHERE is_image = 1 AND id NOT IN ($newMessages)");
+
         $stmt = $this->db->prepare("DELETE FROM messages WHERE id NOT IN ($newMessages)");
         $stmt->execute();
+
+        $oldMessages = $oldMessagesQuery->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($oldMessages as $oldMessage) {
+            $this->image->deleteImage($oldMessage);
+        }
     }
 
 }

@@ -59,7 +59,7 @@ class Chat implements MessageComponentInterface {
         $this->messageModel->store($data->message,  $from->remoteAddress, $data->agent, $data->is_image );
         foreach ($this->clients as $client) {
             if($from != $client) {
-                $client->send($data->message);
+                $client->send($msg);
             }
         }
     }
@@ -69,6 +69,7 @@ class Chat implements MessageComponentInterface {
      */
     public function onClose(ConnectionInterface $conn)
     {
+        gc_collect_cycles();
         // The connection is closed, remove it, as we can no longer send it messages
         $this->clients->detach($conn);
         echo "Connection {$conn->resourceId} has disconnected\n";
@@ -81,6 +82,7 @@ class Chat implements MessageComponentInterface {
     public function onError(ConnectionInterface $conn, Exception $e)
     {
         echo "An error has occurred: {$e->getMessage()}\n";
+
         $conn->close();
     }
 }

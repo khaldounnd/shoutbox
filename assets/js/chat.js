@@ -76,8 +76,6 @@ $(document).ready(function (){
                     alert('Unable to upload image')
                 },
             });
-        } else {
-
         }
     });
 
@@ -90,7 +88,6 @@ $(document).ready(function (){
         if(body.children().length >= 10) {
             body.find('p:first').remove();
         }
-
         message = JSON.parse(message);
         let p = document.createElement('p');
         p.className = 'chat-message';
@@ -115,7 +112,7 @@ $(document).ready(function (){
 
         let agent = $('#user-agent').val();
 
-        if(message !== "\n\n\n") {
+        if(message !== "\n\n\n" && message !== "") {
 
             let data = {
                 message: message,

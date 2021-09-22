@@ -7,13 +7,6 @@ namespace App;
 class Image
 {
 
-    protected Message $message;
-
-    public function __construct()
-    {
-        $this->message = new Message();
-    }
-
     /**
      * @param $img
      * @return string
@@ -42,6 +35,18 @@ class Image
         echo json_encode('Unable to Upload File');
         die();
 
+    }
+
+    public function deleteImage($img)
+    {
+        try {
+            unlink($_SERVER['DOCUMENT_ROOT']. $img['message']);
+        } catch (\Exception $exception) {
+            header('HTTP/1.1 500 Internal Error');
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode('Unable to Delete Image');
+            die();
+        }
     }
 
 }
