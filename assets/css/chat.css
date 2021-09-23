@@ -15,8 +15,6 @@
 }
 
 body {
-    background-image: url('../../assets/img/chatboxBackground.gif');
-    background-size: cover;
     max-height: 90vh;
     height: 100%;
 }
@@ -111,4 +109,13 @@ body {
 .emojionearea-editor {
     min-height: 8vh !important;
     max-height: 8vh !important;
+}
+
+#background {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1
 }

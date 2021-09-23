@@ -109,6 +109,7 @@ $(document).ready(function (){
         } else {
             let image = document.createElement('img');
             image.src = message.message;
+            image.alt = message.message;
             p.appendChild(image)
         }
 
