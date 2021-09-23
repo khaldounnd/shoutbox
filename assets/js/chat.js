@@ -1,14 +1,13 @@
 $(document).ready(function (){
 
+    /**
+     * Initializing Emoji Area
+     * @type {HTMLElement}
+     */
     let textarea = $("#message").emojioneArea({
         pickerPosition: "top",
         tonesStyle: "radio"
     });
-
-    /**
-     * \
-     * @type {HTMLElement}
-     */
     textarea[0].emojioneArea.on('keyup', function (button, event){
         if (event.key === 'Enter') {
             event.preventDefault();
@@ -21,7 +20,7 @@ $(document).ready(function (){
     });
 
     /**
-     *
+     * Initializing Websocket
      * @type {WebSocket}
      */
     let conn = new WebSocket('ws://localhost:8080');
@@ -30,7 +29,7 @@ $(document).ready(function (){
     };
 
     /**
-     *
+     * Handling new message from socket
      * @param e
      */
     conn.onmessage = function(e) {
@@ -38,7 +37,7 @@ $(document).ready(function (){
     };
 
     /**
-     *
+     * Event Handler for Clicking The Send Button
      */
     $('#send').click(function (){
         let message = textarea[0].emojioneArea.getText();
@@ -46,41 +45,52 @@ $(document).ready(function (){
     })
 
     /**
-     *
+     * Opening hidden file upload field
      */
     $('#sendImage').click(function (){
         document.getElementById('image').click();
     })
 
     /**
-     *
+     * Uploading File
      */
     $('#image').on('change', function (){
         let fd = new FormData();
         let image = $('#image')[0].files;
 
-        if(image.length > 0 ) {
-            fd.append('image', image[0]);
+        $.confirm({
+            title: 'Are You Sure?',
+            content: 'Upload Image?',
+            buttons: {
+                confirm: function () {
+                    if(image.length > 0 ) {
+                        fd.append('image', image[0]);
 
-            $.ajax({
-                url: 'submitImage.php',
-                type: 'POST',
-                contentType: false,
-                processData: false,
-                data: fd,
-                success: function (data) {
-                    sendMessage(data, 1);
-                },
+                        $.ajax({
+                            url: 'submitImage.php',
+                            type: 'POST',
+                            contentType: false,
+                            processData: false,
+                            data: fd,
+                            success: function (data) {
+                                sendMessage(data, 1);
+                            },
 
-                error: function (data) {
-                    alert('Unable to upload image')
+                            error: function (data) {
+                                alert('Unable to upload image')
+                            },
+                        });
+                    }
                 },
-            });
-        }
+                cancel: function () {
+                    $.alert('Canceled');
+                },
+            }
+        });
     });
 
     /**
-     *
+     * Method to handle new images.
      * @param message
      */
     function addMessage(message){
@@ -88,9 +98,12 @@ $(document).ready(function (){
         if(body.children().length >= 10) {
             body.find('p:first').remove();
         }
+
         message = JSON.parse(message);
+
         let p = document.createElement('p');
         p.className = 'chat-message';
+
         if(message.is_image == 0){
             p.innerHTML = message.message;
         } else {
@@ -99,17 +112,21 @@ $(document).ready(function (){
             p.appendChild(image)
         }
 
+        //Attach Click Event Listener to open Modal showing message
         p.addEventListener('click', function (){
             showModal(message.message, message.is_image);
         });
         body.append(p);
 
-        var objDiv = document.getElementById("messages");
+        //Scroll down to newest message
+        let objDiv = document.getElementById("messages");
         objDiv.scrollTop = objDiv.scrollHeight;
     }
 
     /**
-     *
+     * Send message through socket
+     * @param message
+     * @param is_image
      */
     function sendMessage(message, is_image){
 
@@ -133,6 +150,11 @@ $(document).ready(function (){
         }
     }
 
+    /**
+     * Open Modal and Add Related data to its body
+     * @param message
+     * @param is_image
+     */
     function showModal(message, is_image) {
         let body = $('#modal-body');
         if (is_image == 0) {
