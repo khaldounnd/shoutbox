@@ -103,6 +103,9 @@ $(document).ready(function (){
             showModal(message.message, message.is_image);
         });
         body.append(p);
+
+        var objDiv = document.getElementById("messages");
+        objDiv.scrollTop = objDiv.scrollHeight;
     }
 
     /**
