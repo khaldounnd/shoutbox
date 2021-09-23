@@ -105,18 +105,31 @@ $(document).ready(function (){
         p.className = 'chat-message';
 
         if(message.is_image == 0){
-            p.innerHTML = message.message;
+            try {
+                let url = new URL(message.message)
+
+                p.innerHTML= "<a href='" + message.message + "' target='_blank' />"
+                let link = document.createElement('a')
+                link.href = message.message
+                link.target = "_blank"
+                link.innerHTML = message.message
+                p.appendChild(link)
+
+            } catch (_) {
+                p.innerHTML = message.message;
+            }
+
         } else {
             let image = document.createElement('img');
             image.src = message.message;
             image.alt = message.message;
             p.appendChild(image)
-        }
 
-        //Attach Click Event Listener to open Modal showing message
-        p.addEventListener('click', function (){
-            showModal(message.message, message.is_image);
-        });
+            //Attach Click Event Listener to open Modal showing message
+            p.addEventListener('click', function (){
+                showModal(message.message, message.is_image);
+            });
+        }
         body.append(p);
 
         //Scroll down to newest message
@@ -163,7 +176,7 @@ $(document).ready(function (){
             body.append("<p>" + message + "</p>")
         } else {
             body.html(null);
-            body.append("<img src=\"" + message + "\" alt='message'>")
+            body.append("<img style='width: auto; height: 200px' src=\"" + message + "\" alt='message'>")
         }
 
         $('#modal').modal('toggle')
