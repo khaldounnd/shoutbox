@@ -8,10 +8,11 @@ class Image
 {
 
     /**
-     * @param $img
+     * Upload Image Method
+     * @param array<string> $img
      * @return string
      */
-    public function upload($img)
+    public function upload(array $img): string
     {
         $filename = $img['name'];
 
@@ -37,7 +38,11 @@ class Image
 
     }
 
-    public function deleteImage($img)
+    /**
+     * Delete Image Method
+     * @param array<string> $img
+     */
+    public function delete(array $img) : void
     {
         try {
             unlink($_SERVER['DOCUMENT_ROOT']. $img['message']);

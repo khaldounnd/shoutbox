@@ -9,12 +9,12 @@ use PDOException;
 
 class Connection
 {
-    protected static $conn;
+    protected static ?PDO $conn;
 
     /**
      * @return PDO|null
      */
-    public static function connect()
+    public static function connect(): ?PDO
     {
         $servername = "localhost";
         $username = "khaldoun";

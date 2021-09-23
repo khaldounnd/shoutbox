@@ -28,7 +28,7 @@ class Chat implements MessageComponentInterface {
      * @param  ConnectionInterface $conn The socket/connection that just connected to your application
      * @throws Exception
      */
-    public function onOpen(ConnectionInterface $conn)
+    public function onOpen(ConnectionInterface $conn) : void
     {
         // Store the new connection to send messages to later
         $this->clients->attach($conn);
@@ -53,7 +53,7 @@ class Chat implements MessageComponentInterface {
      * @param  string             $msg  The message received
      * @throws Exception
      */
-    public function onMessage(ConnectionInterface $from, $msg)
+    public function onMessage(ConnectionInterface $from, $msg) : void
     {
         $data = json_decode($msg);
         $this->messageModel->store($data->message,  $from->remoteAddress, $data->agent, $data->is_image );
@@ -65,9 +65,10 @@ class Chat implements MessageComponentInterface {
     }
 
     /**
+     * When a connection is closed this method is triggered
      * @param ConnectionInterface $conn
      */
-    public function onClose(ConnectionInterface $conn)
+    public function onClose(ConnectionInterface $conn) : void
     {
         gc_collect_cycles();
         // The connection is closed, remove it, as we can no longer send it messages
@@ -79,10 +80,9 @@ class Chat implements MessageComponentInterface {
      * @param ConnectionInterface $conn
      * @param Exception $e
      */
-    public function onError(ConnectionInterface $conn, Exception $e)
+    public function onError(ConnectionInterface $conn, Exception $e) : void
     {
         echo "An error has occurred: {$e->getMessage()}\n";
-
         $conn->close();
     }
 }
