@@ -20,4 +20,6 @@ credentials. Start it either using apache or PHP cli.
 
 Run the command ```php bin/chat-server.php``` in the terminal. 
 
+Note: you might need to give write permission to uploads folder if you are using LAMP from ```var/www/html```
+
 You are now good to go. Enjoy!
